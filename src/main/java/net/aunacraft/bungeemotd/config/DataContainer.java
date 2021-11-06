@@ -12,6 +12,19 @@ public class DataContainer {
     private String maintenanceUnconnectableMessage;
     private boolean maintenance;
 
+    public DataContainer(String normalMotd, String maintenanceMotd, String playerInfo, String maintenancePlayerInfo, String maintenanceUnconnectableMessage) {
+        this.normalMotd = normalMotd;
+        this.maintenanceMotd = maintenanceMotd;
+        this.playerInfo = playerInfo;
+        this.maintenancePlayerInfo = maintenancePlayerInfo;
+        this.maintenanceUnconnectableMessage = maintenanceUnconnectableMessage;
+        this.maintenance = false;
+    }
+
+    public static DataContainer fromString(String serializedData) {
+        return new Gson().fromJson(serializedData, DataContainer.class);
+    }
+
     public boolean isMaintenance() {
         return maintenance;
     }
@@ -60,20 +73,7 @@ public class DataContainer {
         this.maintenanceUnconnectableMessage = maintenanceUnconnectableMessage;
     }
 
-    public DataContainer(String normalMotd, String maintenanceMotd, String playerInfo, String maintenancePlayerInfo, String maintenanceUnconnectableMessage) {
-        this.normalMotd = normalMotd;
-        this.maintenanceMotd = maintenanceMotd;
-        this.playerInfo = playerInfo;
-        this.maintenancePlayerInfo = maintenancePlayerInfo;
-        this.maintenanceUnconnectableMessage = maintenanceUnconnectableMessage;
-        this.maintenance = false;
-    }
-
-    public String toString(){
+    public String toString() {
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);
-    }
-
-    public static DataContainer fromString(String serializedData){
-        return new Gson().fromJson(serializedData, DataContainer.class);
     }
 }

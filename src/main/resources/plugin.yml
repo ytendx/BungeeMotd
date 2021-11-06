@@ -1,0 +1,6 @@
+  name: BungeeMotd-Auna
+  main: net.aunacraft.bungeemotd.BungeeMOTD
+  version: 1.0
+  authors:
+    - ytendx
+    - AunaCraft

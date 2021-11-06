@@ -1,28 +1,23 @@
 package net.aunacraft.bungeemotd.config;
 
+import net.aunacraft.bungeemotd.utils.FileUtil;
 import net.md_5.bungee.api.plugin.Plugin;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class DataLoader {
 
     private final DataContainer container;
 
-    public DataContainer getContainer() {
-        return container;
-    }
-
     public DataLoader(Plugin plugin) throws IOException {
         // Creating Plugin DataFolder if doesn´t exist
-        if(!plugin.getDataFolder().exists())
+        if (!plugin.getDataFolder().exists())
             plugin.getDataFolder().mkdir();
 
-        final File dataFile = new File("plugins\\" + plugin.getDataFolder().getName() + "\\config.json");
+        final File dataFile = new File(plugin.getDataFolder(), "config.json");
 
-        if(!dataFile.exists()){
+        if (!dataFile.exists()) {
             dataFile.createNewFile();
 
             final FileWriter writer = new FileWriter(dataFile);
@@ -33,22 +28,18 @@ public class DataLoader {
             writer.close();
 
             this.container = defaultContainer;
-        }else{
-            Scanner scanner = new Scanner(dataFile);
-            StringBuilder fileContent = new StringBuilder();
-
-            while (scanner.hasNextLine()){
-                String line = scanner.nextLine();
-                fileContent.append(line);
-            }
-
-            this.container = DataContainer.fromString(fileContent.toString());
+        } else {
+            this.container = DataContainer.fromString(FileUtil.getFileContent(dataFile, this.getDefaultContainer().toString()));
         }
 
 
     }
 
-    private DataContainer getDefaultContainer(){
+    public DataContainer getContainer() {
+        return container;
+    }
+
+    private DataContainer getDefaultContainer() {
         return new DataContainer(
                 "§cThis is the Motd!",
                 "§cThis is the maintenance motd",

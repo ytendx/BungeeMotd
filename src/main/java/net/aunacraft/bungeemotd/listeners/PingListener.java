@@ -17,8 +17,8 @@ public class PingListener implements Listener {
     }
 
     @EventHandler
-    public void handlePing(ProxyPingEvent event){
-        if(BungeeMOTD.getPluginInstance().getDataLoader().getContainer().isMaintenance()){
+    public void handlePing(ProxyPingEvent event) {
+        if (BungeeMOTD.getPluginInstance().getDataLoader().getContainer().isMaintenance()) {
             ServerPing ping = event.getResponse();
             ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
                     new ServerPing.PlayerInfo(BungeeMOTD.getPluginInstance().getDataLoader().getContainer().getMaintenancePlayerInfo(), UUID.randomUUID())
@@ -26,7 +26,7 @@ public class PingListener implements Listener {
             ping.setVersion(new ServerPing.Protocol(BungeeMOTD.getPluginInstance().getDataLoader().getContainer().getMaintenanceUnconnectableMessage(), 0));
             ping.setDescriptionComponent(new TextComponent(BungeeMOTD.getPluginInstance().getDataLoader().getContainer().getMaintenanceMotd()));
             event.setResponse(ping);
-        }else{
+        } else {
             ServerPing ping = event.getResponse();
             ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
                     new ServerPing.PlayerInfo(BungeeMOTD.getPluginInstance().getDataLoader().getContainer().getPlayerInfo(), UUID.randomUUID())
